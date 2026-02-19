@@ -24,5 +24,6 @@
   "language": "Язык",
   "dark_mode": "Темная тема",
   "russian": "Русский",
-  "uzbek": "Узбекский"
+  "uzbek": "Узбекский",
+  "product_not_found": "Продукт не найден"
 }

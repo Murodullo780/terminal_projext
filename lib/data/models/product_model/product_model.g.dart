@@ -18,6 +18,8 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       currentCount: (json['currentCount'] as num?)?.toInt(),
       marks:
           (json['marks'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      barcodes:
+          (json['barcode'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
@@ -31,4 +33,5 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'created_at': instance.createdAt.toIso8601String(),
       'currentCount': instance.currentCount,
       'marks': instance.marks,
+      'barcode': instance.barcodes,
     };

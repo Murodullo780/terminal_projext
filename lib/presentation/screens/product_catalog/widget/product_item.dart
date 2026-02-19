@@ -6,18 +6,23 @@ import 'package:terminal_project/presentation/screens/product_catalog/product_de
 class ProductItem extends StatelessWidget {
   final ProductModel item;
   final int index;
+  final Function(bool going) onNav;
 
-  const ProductItem({super.key, required this.item, required this.index});
+  const ProductItem({super.key, required this.item, required this.index, required this.onNav});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProductDetail(productModel: item),
-        ),
-      ),
+      onTap: () async {
+        onNav(true);
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetail(productModel: item),
+          ),
+        );
+        onNav(false);
+      },
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       child: Container(
         decoration: BoxDecoration(

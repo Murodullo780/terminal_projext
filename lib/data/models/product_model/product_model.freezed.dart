@@ -32,6 +32,8 @@ mixin _$ProductModel {
   DateTime get createdAt => throw _privateConstructorUsedError;
   int? get currentCount => throw _privateConstructorUsedError;
   List<String>? get marks => throw _privateConstructorUsedError;
+  @JsonKey(name: 'barcode')
+  List<String>? get barcodes => throw _privateConstructorUsedError;
 
   /// Serializes this ProductModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,7 +60,8 @@ abstract class $ProductModelCopyWith<$Res> {
       @JsonKey(fromJson: double.parse) double rating,
       @JsonKey(name: 'created_at', fromJson: DateTime.parse) DateTime createdAt,
       int? currentCount,
-      List<String>? marks});
+      List<String>? marks,
+      @JsonKey(name: 'barcode') List<String>? barcodes});
 }
 
 /// @nodoc
@@ -85,6 +88,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? createdAt = null,
     Object? currentCount = freezed,
     Object? marks = freezed,
+    Object? barcodes = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -123,6 +127,10 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.marks
           : marks // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      barcodes: freezed == barcodes
+          ? _value.barcodes
+          : barcodes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -144,7 +152,8 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       @JsonKey(fromJson: double.parse) double rating,
       @JsonKey(name: 'created_at', fromJson: DateTime.parse) DateTime createdAt,
       int? currentCount,
-      List<String>? marks});
+      List<String>? marks,
+      @JsonKey(name: 'barcode') List<String>? barcodes});
 }
 
 /// @nodoc
@@ -169,6 +178,7 @@ class __$$ProductModelImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? currentCount = freezed,
     Object? marks = freezed,
+    Object? barcodes = freezed,
   }) {
     return _then(_$ProductModelImpl(
       id: null == id
@@ -207,6 +217,10 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           ? _value._marks
           : marks // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      barcodes: freezed == barcodes
+          ? _value._barcodes
+          : barcodes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -224,8 +238,10 @@ class _$ProductModelImpl implements _ProductModel {
       @JsonKey(name: 'created_at', fromJson: DateTime.parse)
       required this.createdAt,
       this.currentCount,
-      final List<String>? marks})
-      : _marks = marks;
+      final List<String>? marks,
+      @JsonKey(name: 'barcode') final List<String>? barcodes})
+      : _marks = marks,
+        _barcodes = barcodes;
 
   factory _$ProductModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductModelImplFromJson(json);
@@ -259,9 +275,20 @@ class _$ProductModelImpl implements _ProductModel {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<String>? _barcodes;
+  @override
+  @JsonKey(name: 'barcode')
+  List<String>? get barcodes {
+    final value = _barcodes;
+    if (value == null) return null;
+    if (_barcodes is EqualUnmodifiableListView) return _barcodes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'ProductModel(id: $id, name: $name, price: $price, stock: $stock, category: $category, rating: $rating, createdAt: $createdAt, currentCount: $currentCount, marks: $marks)';
+    return 'ProductModel(id: $id, name: $name, price: $price, stock: $stock, category: $category, rating: $rating, createdAt: $createdAt, currentCount: $currentCount, marks: $marks, barcodes: $barcodes)';
   }
 
   @override
@@ -280,7 +307,8 @@ class _$ProductModelImpl implements _ProductModel {
                 other.createdAt == createdAt) &&
             (identical(other.currentCount, currentCount) ||
                 other.currentCount == currentCount) &&
-            const DeepCollectionEquality().equals(other._marks, _marks));
+            const DeepCollectionEquality().equals(other._marks, _marks) &&
+            const DeepCollectionEquality().equals(other._barcodes, _barcodes));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -295,7 +323,8 @@ class _$ProductModelImpl implements _ProductModel {
       rating,
       createdAt,
       currentCount,
-      const DeepCollectionEquality().hash(_marks));
+      const DeepCollectionEquality().hash(_marks),
+      const DeepCollectionEquality().hash(_barcodes));
 
   /// Create a copy of ProductModel
   /// with the given fields replaced by the non-null parameter values.
@@ -315,16 +344,18 @@ class _$ProductModelImpl implements _ProductModel {
 
 abstract class _ProductModel implements ProductModel {
   const factory _ProductModel(
-      {required final int id,
-      required final String name,
-      @JsonKey(fromJson: double.parse) required final double price,
-      required final int stock,
-      required final String category,
-      @JsonKey(fromJson: double.parse) required final double rating,
-      @JsonKey(name: 'created_at', fromJson: DateTime.parse)
-      required final DateTime createdAt,
-      final int? currentCount,
-      final List<String>? marks}) = _$ProductModelImpl;
+          {required final int id,
+          required final String name,
+          @JsonKey(fromJson: double.parse) required final double price,
+          required final int stock,
+          required final String category,
+          @JsonKey(fromJson: double.parse) required final double rating,
+          @JsonKey(name: 'created_at', fromJson: DateTime.parse)
+          required final DateTime createdAt,
+          final int? currentCount,
+          final List<String>? marks,
+          @JsonKey(name: 'barcode') final List<String>? barcodes}) =
+      _$ProductModelImpl;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$ProductModelImpl.fromJson;
@@ -350,6 +381,9 @@ abstract class _ProductModel implements ProductModel {
   int? get currentCount;
   @override
   List<String>? get marks;
+  @override
+  @JsonKey(name: 'barcode')
+  List<String>? get barcodes;
 
   /// Create a copy of ProductModel
   /// with the given fields replaced by the non-null parameter values.

@@ -65,7 +65,7 @@ class _ProductDetailState extends State<ProductDetail> {
       bloc: productBloc,
       builder: (context, state) {
         return BarcodeKeyboardListener(
-          bufferDuration: Duration(milliseconds: 200),
+          bufferDuration: const Duration(milliseconds: 2000),
           caseSensitive: true,
           useKeyDownEvent: true,
           onBarcodeScanned: _addProd,

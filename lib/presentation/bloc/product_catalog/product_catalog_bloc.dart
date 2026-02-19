@@ -104,7 +104,6 @@ class ProductCatalogBloc extends Bloc<ProductCatalogEvent, ProductCatalogState> 
         }
       }
     });
-
     on<ProductCatalogSendEvent>((event, emit) async {
       if (state is ProductCatalogLoaded) {
         final crnState = state as ProductCatalogLoaded;
