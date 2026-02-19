@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:terminal_project/presentation/cubit/settings/settings_cubit.dart';
 
 class QrScanner extends StatefulWidget {
   final void Function(String value) onScan;
@@ -17,6 +19,17 @@ class _QrScannerState extends State<QrScanner> {
   );
 
   bool _isScanned = false;
+
+  _initPermission() async {
+    final settingsCubit = context.read<SettingsCubit>();
+    await settingsCubit.requestCameraPermission();
+  }
+
+  @override
+  void initState() {
+    _initPermission();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -157,7 +157,7 @@ class CustomEasyLoading extends StatelessWidget {
                               Text(
                                 statusText,
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(fontSize: 21),
+                                style:  TextStyle(fontSize: 21, color: Colors.black),
                               ),
                             ],
                           ],

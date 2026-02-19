@@ -53,6 +53,9 @@ dependencies:
   flutter_barcode_listener: ^0.1.4
   ai_barcode_scanner: ^6.0.1
 
+  # util
+  permission_handler: ^11.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
