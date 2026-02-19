@@ -7,6 +7,7 @@ import 'package:terminal_project/presentation/components/custom_elevated_button.
 import 'package:terminal_project/presentation/components/custom_outlined_button.dart';
 import 'package:terminal_project/presentation/components/custom_text_form_field.dart';
 import 'package:terminal_project/presentation/routes/routes.dart';
+import 'package:terminal_project/presentation/screens/qr_scanner/qr_scanner.dart';
 
 class EditHost extends StatelessWidget {
   EditHost({super.key});
@@ -16,6 +17,14 @@ class EditHost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    void saveEditedHost(BuildContext context2){
+      final host = hostController.text;
+      final port = portController.text;
+      if (port.isEmpty || host.isEmpty) return;
+      context2.read<EditHostBloc>().add(SaveEditedHost(host: host, port: port));
+    }
+
     return BlocProvider(
       create: (context) => EditHostBloc()..add(InitEditHostEvent()),
       child: BlocConsumer<EditHostBloc, EditHostState>(
@@ -29,7 +38,8 @@ class EditHost extends StatelessWidget {
             );
           } else if (state is EditHostDone) {
             // Navigator.pushAndRemoveUntil(context, AppRoutes.productCatalog);
-            Navigator.pushNamedAndRemoveUntil(context, AppRoutes.productCatalog, ModalRoute.withName("/"));
+            Navigator.pushNamedAndRemoveUntil(
+                context, AppRoutes.productCatalog, ModalRoute.withName("/"));
           }
         },
         builder: (context, state) {
@@ -38,7 +48,49 @@ class EditHost extends StatelessWidget {
               child: AppBar(
                 title: Text('edit_host'.tr()),
                 actions: [
-                  CustomOutlinedButton(child: Icon(Icons.document_scanner)),
+                  CustomOutlinedButton(
+                    child: Icon(Icons.document_scanner),
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => QrScanner(
+                            onScan: (value){
+                              try {
+                                final parts = value.split(':');
+
+                                if (parts.length != 2) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Invalid QR format')),
+                                  );
+                                  return;
+                                }
+
+                                final host = parts[0];
+                                final port = parts[1];
+
+                                if (int.tryParse(port) == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Invalid port')),
+                                  );
+                                  return;
+                                }
+
+                                hostController.text = host;
+                                portController.text = port;
+
+                                saveEditedHost(context);
+                              } catch (_) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('QR parsing error')),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -63,10 +115,7 @@ class EditHost extends StatelessWidget {
               text: 'save'.tr(),
               useRounding: true,
               onPressed: () {
-                final host = hostController.text;
-                final port = portController.text;
-                if (port.isEmpty || host.isEmpty) return;
-                context.read<EditHostBloc>().add(SaveEditedHost(host: host, port: port));
+                saveEditedHost(context);
               },
             ),
           );
